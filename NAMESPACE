@@ -1,0 +1,26 @@
+exportPattern("^[[:alpha:]]+")
+S3method(Ops,weyl)
+importFrom("disordR","elements")
+import("spray")
+import("mathjaxr")
+import("methods")
+
+importFrom(disordR,disord)
+importFrom(disordR,hash)
+importFrom(disordR,hashcal)
+importFrom(disordR,elements)
+importFrom(disordR,is.disord)
+importFrom(disordR,consistent)
+importFrom("disordR","%in%")  # needed for grades<-()
+
+importClassesFrom("freealg", "dot")
+importMethodsFrom("freealg", "[")
+
+S3method(print,weyl)
+S3method(constant,weyl)
+S3method("constant<-",weyl)
+S3method("coeffs<-",weyl)
+
+S3method(dim,weyl)
+S3method(as.id,weyl)
+
