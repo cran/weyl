@@ -1,11 +1,16 @@
 ## ----loadlib,echo=TRUE,print=FALSE,results="hide",message=FALSE---------------
 library(weyl)
 
+## ----firstexample-------------------------------------------------------------
+7*d + 4*x*d^3*x
+
+## ----firstexamplepolyform-----------------------------------------------------
+options(polyform=TRUE)
+7*d + 4*x*d^3*x
+
 ## ----defineandprintd1d2-------------------------------------------------------
-d1 <- weyl(spray(rbind(c(1,1),c(0,3)),c(1,2)))
-d2 <- weyl(spray(rbind(c(0,0),c(1,0),c(2,2)),c(3,7,-5)))
-d1
-d2
+(d1 <- d*x + 2*d^3)
+(d2 <- 3 + 7*d  -5*x^2*d^2)
 
 ## ----showmultiplication-------------------------------------------------------
 d1*d2
@@ -35,6 +40,14 @@ x*(y*z)
 
 ## ----verifyassociativity------------------------------------------------------
 x*(y*z) - (x*y)*z
+
+## -----------------------------------------------------------------------------
+(x9 <- rweyl(dim=9))
+
+## -----------------------------------------------------------------------------
+options(polyform=TRUE)
+x9
+options(polyform=FALSE) # revert to default
 
 ## ----define_derivation_D------------------------------------------------------
 f <- rweyl()
@@ -84,5 +97,23 @@ options(polyform = TRUE)
 (1+o1)*(1-5*o2)
 
 ## ----echo=FALSE---------------------------------------------------------------
-options(polyform = NULL) # restore default Weyl product
+options(polyform = NULL) # restore default print method
+
+## ----makearandomweyl----------------------------------------------------------
+options(weylvars = NULL)  # revert to default names
+(W <- weyl(spray(matrix(c(0,1,1,1,1,2,1,0),2,4),2:3))^2)
+
+## ----showcoeffsinuse----------------------------------------------------------
+coeffs(W)
+
+## ----showdisorderror,error=TRUE-----------------------------------------------
+coeffs(W)[1]
+
+## ----ogreaterthantwo----------------------------------------------------------
+o <- coeffs(W)
+o[o>6]
+
+## ----showextractionworking----------------------------------------------------
+coeffs(W)[coeffs(W)<7] <- coeffs(W)[coeffs(W)<7] + 100
+W
 

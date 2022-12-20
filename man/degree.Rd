@@ -7,7 +7,7 @@
   The \dfn{degree} of a monomial weyl object
   \mjeqn{x^a\partial^b}{omitted} is defined as \mjseqn{a+b}.  The degree
   of a general weyl object expressed as a linear combination of
-  monimials is the maximum of the degrees of these monomials.  Following
+  monomials is the maximum of the degrees of these monomials.  Following
   Coutinho we have:
 
   \itemize{
@@ -31,6 +31,9 @@
   \mjeqn{-\infty}{-infinity}.
 }
 \examples{
+
+(a <- rweyl())
+deg(a)
 
 d1 <- rweyl(n=2)
 d2 <- rweyl(n=2)
