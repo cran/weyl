@@ -1,3 +1,6 @@
+## ----out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE----
+knitr::include_graphics(system.file("help/figures/weyl.png", package = "weyl"))
+
 ## ----loadlib,echo=TRUE,print=FALSE,results="hide",message=FALSE---------------
 library(weyl)
 

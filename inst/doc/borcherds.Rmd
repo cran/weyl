@@ -1,0 +1,130 @@
+---
+title: "Lie algebras and differential operators"
+author: "Robin K. S. Hankin"
+bibliography: weyl.bib
+vignette: >
+  %\VignetteIndexEntry{Differential operators}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("weyl")
+set.seed(0)
+```
+
+
+```{r out.width='20%', out.extra='style="float:right; padding:10px"',echo=FALSE}
+knitr::include_graphics(system.file("help/figures/weyl.png", package = "weyl"))
+```
+
+To cite this work or the `weyl` package in publications please use
+@hankin2022_weyl_arxiv.  In a very nice [youtube
+video](https://www.youtube.com/watch?v=xVbfWunObYQ&ab_channel=RichardE.BORCHERDS),
+Richard Borcherds discusses the fact that first-order differential
+operators do not quite commute, but their commutator is itself
+first-order; here I demonstrate Borcherds's observations in the
+context of the `weyl` package.  Symbolically, if
+
+$$
+D=\sum f_i\left(x_1,\dots,x_n\right)\frac{\partial}{\partial x_i}\qquad
+E=\sum g_i\left(x_1,\dots,x_n\right)\frac{\partial}{\partial x_i}
+$$
+
+where $f_i=f_i\left(x_1,\dots,x_n\right)$ and
+$g_i=g_i\left(x_1,\dots,x_n\right)$ are functions,
+then
+
+$$
+DE=\sum_{i,j}f_i\frac{\partial}{\partial x_i}\,g_i\frac{\partial}{\partial x_j}
+=\sum_{i,j}f_ig_j\frac{\partial}{\partial x_i}\frac{\partial}{\partial x_j} +
+f_i\frac{\partial g_j}{\partial x_i}\,\frac{\partial}{\partial x_j}
+$$
+
+$$
+ED=\sum_{i,j}g_i\frac{\partial}{\partial x_i}\,f_i\frac{\partial}{\partial x_j}
+=\sum_{i,j}g_if_j\frac{\partial}{\partial x_j}\frac{\partial}{\partial x_i} +
+g_i\frac{\partial f_i}{\partial x_j}\,\frac{\partial}{\partial x_j}
+$$
+
+so $E$ and $E$ "nearly" commute, in the sense that $ED-DE$ is _first
+order_:
+
+$$DE-ED=
+\sum_{i,j}f_i\frac{\partial g_j}{\partial x_i}\,\frac{\partial}{\partial
+x_j}-g_i\frac{\partial f_i}{\partial x_j}\,\frac{\partial}{\partial
+x_j}
+$$
+
+Above we have used the fact that partial derivatives commute, which
+leads to the cancellation of the second-order terms.  We can verify
+this using the `weyl` package:
+
+```{r defineDEF}
+D <- weyl(spray(cbind(matrix(sample(8),4,2),kronecker(diag(2),c(1,1))),1:4))
+E <- weyl(spray(cbind(matrix(sample(8),4,2),kronecker(diag(2),c(1,1))),1:4))
+F <- weyl(spray(cbind(matrix(sample(8),4,2),kronecker(diag(2),c(1,1))),1:4))
+D
+```
+
+($E$ and $F$ are similar).  Symbolically we would have
+
+$$D=
+\left( x^6y^2 + 2xy^5\right)\frac{\partial}{\partial x}+
+\left(4x^7y^8 + 3x^4y^3\right)\frac{\partial}{\partial y}
+$$
+
+The package allows us to compose $E$ and $D$, although the composition is quite complicated:
+
+
+```{r sumED}
+summary(E*D)
+```
+
+However, the Lie bracket, $ED-DE$, (`.[E,D]` in package idiom) is
+indeed first order:
+
+```{r giveliebracketofEandD}
+.[E,D]
+```
+
+Above we see that each row is either `1 0` or `0 1`, corresponding to
+either $\partial/\partial x$ or $\partial/\partial y$ respectively.
+Arguably this is easier to see with the other print method:
+
+```{r showotherprintmethod}
+options(polyform = TRUE)
+.[E,D]
+options(polyform = FALSE) # revert to default
+```
+
+We may verify Jacobi's identity:
+
+
+```{r,verifyjacobi,cache=TRUE}
+.[D,.[E,F]] + .[F,.[D,E]] + .[E,.[F,D]]
+```
+
+Borcherds goes on to consider the special case where the $f_i$ and
+$g_i$ are constant.  In this case the operators commute (by repeated
+application of Schwarz's theorem) and so their Lie bracket is
+identically zero.  We can create constant operators easily:
+
+```{r,makeconstantops,cache=TRUE}
+(D <- as.weyl(spray(cbind(matrix(0,3,3),matrix(c(0,1,0,1,0,0,0,0,1),3,3,byrow=T)),1:3)))
+(E <- as.weyl(spray(cbind(matrix(0,3,3),matrix(c(0,1,0,1,0,0,0,0,1),3,3,byrow=T)),5:7)))
+```
+
+(above, see how the first three columns of the index matrix are zero,
+corresponding to constant coefficients of the differential operator;
+symbolically $D=2\frac{\partial}{\partial x}+\frac{\partial}{\partial
+y}+3\frac{\partial}{\partial z}$ and $E=6\frac{\partial}{\partial
+x}+5\frac{\partial}{\partial y}+7\frac{\partial}{\partial z}$.  And
+indeed, their Lie bracket vanishes:
+
+
+```{r label=abelianshow}
+.[D,E]
+```
+
