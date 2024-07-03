@@ -110,7 +110,7 @@ options(weylvars = NULL)  # revert to default names
 coeffs(W)
 
 ## ----showdisorderror,error=TRUE-----------------------------------------------
-coeffs(W)[1]
+try(coeffs(W)[1] , silent=FALSE)
 
 ## ----ogreaterthantwo----------------------------------------------------------
 o <- coeffs(W)
