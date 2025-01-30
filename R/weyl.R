@@ -8,11 +8,15 @@
 setOldClass("weyl")
 
 `is.ok.weyl` <- function(M){
-    stopifnot(is.spray(M))
-    stopifnot(arity(M)%%2 == 0)
-    return(TRUE)
+    if(!is.spray(M)){
+        return("need a spray")
+    } else if(arity(M)%%2 != 0){
+        return("arity must be even")
+    } else {
+        return(TRUE)
+    }
 }
-
+    
 `spray` <- function (M, x, addrepeats = FALSE){spray::spray(M,x,addrepeats=addrepeats)}
                     
 `is.weyl` <- function(M){inherits(M,"weyl")}
@@ -32,6 +36,18 @@ setOldClass("weyl")
 `rweyl` <- function(nterms = 3, vals = seq_len(nterms), dim = 3, powers = 0:2){
     weyl(rspray(n = nterms, vals = vals, arity = dim*2, powers = powers))
 }
+
+`rweyll` <- function(nterms = 15, vals = seq_len(nterms), dim = 4, powers = 0:5){
+    rweyl(nterms = nterms, vals = vals, dim = dim, powers = powers)
+}
+
+`rweylll` <- function(nterms = 50, vals = seq_len(nterms), dim = 8, powers = 0:7){
+    rweyl(nterms = nterms, vals = vals, dim = dim, powers = powers)
+}
+
+`rweyl1` <- function(nterms = 6, vals = seq_len(nterms), dim = 1, powers = 1:5){
+    rweyl(nterms = nterms, vals = vals, dim = dim, powers = powers)
+    }
 
 setGeneric("coeffs")
 `coeffs` <- function(S){UseMethod("coeffs")}
@@ -97,3 +113,18 @@ setMethod("drop","weyl", function(x){
 setGeneric("sort")
 
 `is.zero` <- function(x){spray::is.zero(x)}
+
+`horner` <- function(W, v) {
+    W <- as.weyl(W)
+    Reduce(v, right=TRUE, f=function(a,b){b*W + a})
+}
+
+`ooom` <- function(W, n){
+  stopifnot(constant(W)==0)
+  stopifnot(n>=0)
+  if(n==0){
+    return(as.id(W))
+  } else {
+    return(horner(W,rep(1,n+1)))
+  }
+}

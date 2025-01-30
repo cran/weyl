@@ -45,6 +45,7 @@ x*(y*z)
 x*(y*z) - (x*y)*z
 
 ## -----------------------------------------------------------------------------
+options(polyform=FALSE) # default print method
 (x9 <- rweyl(dim=9))
 
 ## -----------------------------------------------------------------------------
@@ -110,7 +111,9 @@ options(weylvars = NULL)  # revert to default names
 coeffs(W)
 
 ## ----showdisorderror,error=TRUE-----------------------------------------------
+try({
 try(coeffs(W)[1] , silent=FALSE)
+})
 
 ## ----ogreaterthantwo----------------------------------------------------------
 o <- coeffs(W)

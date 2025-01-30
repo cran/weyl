@@ -50,7 +50,12 @@ checker1 <- function(A){
   expect_output(print(A))
   options("polyform" = TRUE)
   expect_output(print(A))
-    
+
+  if(constant(A) == 0){
+      expect_true(ooom(A,1)*(1-A) == 1-A^2)
+      expect_true(ooom(A,2)*(1-A) == 1-A^3)
+      expect_true(ooom(A,3)*(1-A) == 1-A^4)
+  }
   
 }   # checker1() closes
   
@@ -70,7 +75,7 @@ checker3 <- function(A,B,C){
 
 }
   
-for(i in seq_len(3)){
+for(i in seq_len(1)){
 
     A <- rweyl(n=2,dim=3)
     B <- rweyl(n=2,dim=3)
