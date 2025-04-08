@@ -411,27 +411,26 @@ which would map <span class="math inline">\(f\)</span> to <span class="math inli
 4\left(x\left(xf\right)&#39;&#39;&#39;\right)&#39;\)</span>. It can be
 shown that any element of the Weyl algebra can be expressed in the
 standard form</p>
-<p><span class="math display">\[
-\sum_i a_i \partial^{p_i}x^{q_i}\]</span></p>
+<p><span class="math display">\[\sum_i a_i
+x^{q_i}\partial^{p_i}\]</span></p>
 <p>for real <span class="math inline">\(a_i\)</span> and nonnegative
-integers <span class="math inline">\(p_i,q_i\)</span>. Converting a
-general word to standard form is not straightforward but we have</p>
+integers <span class="math inline">\(p_i,q_i\)</span>. Standard form is
+desirable operationally: it is a lot easier to evaluate <span class="math inline">\(x^i\partial^j\)</span> [that is, differentiate
+<span class="math inline">\(j\)</span> times then multiply by <span class="math inline">\(x^i\)</span>] than to evaluate <span class="math inline">\(\partial^kx^l\)</span> [that is, multiply by <span class="math inline">\(x^l\)</span> then differentiate <span class="math inline">\(k\)</span> times] Converting a general word to
+standard form is not straightforward but we have</p>
 <p><span class="math display">\[
-\partial x^n = x^n\partial +  nx^{n-1}\]</span></p>
-<p>and</p>
+\partial x^n = x^n\partial +  nx^{n-1}.\]</span></p>
+<p>(or, using functional notation, <span class="math inline">\(\left(x^nf(x)\right)&#39;=x^nf&#39;(x)+nx^{n-1}f(x)\)</span>).
+Noting that operator composition is associative, we may apply this rule
+recursively to find standard form for products <span class="math inline">\((x^i\partial^j)(x^l\partial^m)\)</span>.
+Alternatively we may follow <span class="citation">Wolf (<a href="#ref-wolf1975">1975</a>)</span> and use the fact that</p>
 <p><span class="math display">\[
-\partial^n x = x\partial^n +  n\partial^{n-1}.\]</span></p>
-<p>We can apply these rules recursively to find standard form for
-products <span class="math inline">\((\partial^i x^j)(\partial^l
-x^m)\)</span>. Alternatively we may follow <span class="citation">Wolf
-(<a href="#ref-wolf1975">1975</a>)</span> and use the fact that</p>
-<p><span class="math display">\[
-(\partial^i x^j)(\partial^lx^m)=
+(x^i\partial^j)(x^l\partial^m)=
 \sum_{r=0}^j{j\choose r}{l\choose
-r}\partial^{i+l-r}x^{j+m-r}.\]</span></p>
-<p>These rules can be used to show that <span class="math inline">\(7\partial + 4\partial x\partial^3 x\)</span> can
-be expressed as <span class="math inline">\(7\partial + 12x\partial^2 +
-4x^2\partial d^3\)</span>, which is in standard form.</p>
+r}x^{i+l-r}\partial^{j+m-r}.\]</span></p>
+<p>These rules can be used to show, for example, that <span class="math inline">\(7\partial + 4x\partial^3 x\)</span> can be
+expressed as <span class="math inline">\(7\partial + 12x\partial^2 +
+4x^2\partial^3\)</span>, which is in standard form.</p>
 <div id="the-package-in-use" class="section level2">
 <h2>The package in use</h2>
 <p>The package includes functionality to automate the above
@@ -626,7 +625,7 @@ recurrence relation used. This defaults to
 ##     }
 ##     spray(ind, val, addrepeats = TRUE)
 ## }
-## &lt;bytecode: 0x5e25c3464b18&gt;
+## &lt;bytecode: 0x65152ec6b430&gt;
 ## &lt;environment: namespace:weyl&gt;</code></pre>
 <p>Function <code>weyl_prod_helper3()</code> follows Wolf. This gives
 the univariate concatenation product <span class="math inline">\((\partial^a x^b)(\partial^c x^d)\)</span> in terms
