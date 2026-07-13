@@ -1,30 +1,25 @@
 `weyl` <- function(M){
     if(is.matrix(M)){M <- spray(M)}
     stopifnot(is.ok.weyl(M))
-    class(M) <- c("weyl","spray")
-    return(M)
+    return(structure(M, class = c("weyl","spray"))) # class weyl set only here
 }
 
 setOldClass("weyl")
 
 `is.ok.weyl` <- function(M){
-    if(!is.spray(M)){
-        return("need a spray")
-    } else if(arity(M)%%2 != 0){
-        return("arity must be even")
-    } else {
-        return(TRUE)
-    }
+    if(!is.spray(M)){stop("need a spray")}
+    if(arity(M)%%2 != 0){stop("arity must be even")}
+    return(TRUE)
 }
     
 `spray` <- function (M, x, addrepeats = FALSE){spray::spray(M,x,addrepeats=addrepeats)}
                     
-`is.weyl` <- function(M){inherits(M,"weyl")}
-`as.weyl` <- function(val,d){
+`is.weyl` <- function(M){inherits(M, "weyl")}
+`as.weyl` <- function(val, d){
     if(is.weyl(val) | is.spray(val)){
         out <- val
     } else if(is.matrix(val)){
-        out <- spray(val,d)
+        out <- spray(val, d)
     } else if(is.numeric(val)){
         return(val*idweyl(d))
     } else {

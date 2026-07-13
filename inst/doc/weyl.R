@@ -23,9 +23,7 @@ options(polyform=TRUE)
 (d1^2 + d2) * (d2 - 3*d1)
 
 ## -----------------------------------------------------------------------------
-x <- weyl(cbind(0,1))
-D <- weyl(cbind(1,0))
-x^2*D*x*D^2
+d^2 * x * d * x^2
 
 ## ----showmultivariateweyl-----------------------------------------------------
 options(polyform=FALSE)  # revert to default print method

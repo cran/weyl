@@ -17,11 +17,11 @@
 }
 \usage{
 grade(C, n, drop=TRUE)
-grade(C,n) <- value
+grade(C, n) <- value
 grades(x)
 }
 \arguments{
-  \item{C,x}{Weyl object}
+  \item{C, x}{Weyl object}
   \item{n}{Integer vector specifying grades to extract}
   \item{value}{Replacement value, a numeric vector}
   \item{drop}{Boolean, with default \code{TRUE} meaning to coerce a
@@ -31,14 +31,16 @@ grades(x)
 \details{
 
 Function \code{grades()} returns an (unordered) vector specifying the
-grades of the constituent terms.  Function \code{grades<-()} allows
-idiom such as \code{grade(x,1:2) <- 7} to operate as expected [here to
-set all coefficients of terms with grades 1 or 2 to value 7].
+grades of the constituent terms.  
 
-Function \code{grade(C,n)} returns a Weyl object with just the
+Function \code{grade(x,n)} returns a Weyl object with just the
 elements of grade \code{g}, where \code{g \%in\% n}.
 
-The zero grade term, \code{grade(C,0)}, is given more naturally by
+Function \code{grade<-()} allows idiom such as \code{grade(x,1:2) <- 7}
+to operate as expected [here to set all coefficients of terms with
+grades 1 or 2 to value 7].
+
+The zero grade term, \code{grade(x,0)}, is given more naturally by
 \code{constant(C)}.
 }
 \value{Integer vector or weyl object}
@@ -48,7 +50,7 @@ The zero grade term, \code{grade(C,0)}, is given more naturally by
 a <- rweyl(30)
 
 grades(a)
-grade(a,1:4)
-grade(a,5:9) <- -99
+grade(a, 1:4)
+grade(a, 5:9) <- -99
 a
 }
